@@ -1,0 +1,34 @@
+body {
+    background-color: #000000; /* Cor de fundo cinza */
+    color: #ffffff; /* Cor do texto branca */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+#logo {
+    width: 150px; /* Ajuste o tamanho da imagem conforme necessário */
+    height: 150px;
+    margin-bottom: 120px; /* Adiciona espaço abaixo da imagem do logo */
+    border-radius: 50%; /* Bordas arredondadas para criar um círculo */
+}
+#alerta {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+.form-control {
+    background-color: transparent; /* Caixa de texto transparente */
+    color: #ffffff; /* Cor do texto branca */
+}
+.input-group-prepend {
+    margin-right: 10px; /* Espaçamento entre a imagem de alerta e o texto */
+}
+.btn-primary {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+}

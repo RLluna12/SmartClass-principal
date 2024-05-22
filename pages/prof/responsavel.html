@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <!-- 追加：外部のスタイルシート -->
+  <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
+  <!-- <link rel="stylesheet" href="styles/style.css" /> -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../css/bootstrap.css">
+  <!-- Bootstrap Datepicker CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ナビゲーションバーのコードを貼り付け -->
+  <nav class="navbar navbar-dark bg-dark fixed-top" style="background-color: transparent">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+        aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Smart Class</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <!-- <form class="d-flex mt-3" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success" type="submit">Search</button>
+          </form> -->
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="homeProf.html">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Apricar Notas e Faltas
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="apricarNotas.html">Notas</a></li>
+                <li><a class="dropdown-item" href="apricarFaltas.html">Faltas</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Calendario.html">Calendario</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#">Financeiro</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" href="dadosProf.html">Dados Cadastrais</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Cadastro
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="professor.html">Professores</a></li>
+                <li><a class="dropdown-item" href="turma.html">Turmas</a></li>
+                <li><a class="dropdown-item" href="disciplina.html">Disciplinas</a></li>
+                <li><a class="dropdown-item" href="responsavel.html">Responsaveis</a></li>
+                <li><a class="dropdown-item" href="aluno.html">Alunos</a></li><!-- 
+                <li><a class="dropdown-item" href="../pages/nota.html">Notas</a></li>
+                <li><a class="dropdown-item" href="../pages/evento.html">Eventos</a></li>
+                <li><a class="dropdown-item" href="../pages/aluno_turma.html">Alunos e Turmas</a></li>
+                <li><a class="dropdown-item" href="../pages/aluno_resp.html">Alunos e Responsaveis</a></li>
+                <li><a class="dropdown-item" href="../pages/evento_aluno.html">Eventos e Alunos</a></li>
+                <li><a class="dropdown-item" href="../pages/aluno_disci.html">Alunos e Disciplinas</a></li>
+                <li><a class="dropdown-item" href="../pages/evento_prof.html">Evento_Professor</a></li>
+                <li><a class="dropdown-item" href="../pages/turma_disci.html">turma_disciplina</a></li> -->
+              </ul>
+            </li>
+
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Apricar notas e faltas
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="../pages/selectTurma_notas.html">Notas</a></li>
+                <li><a class="dropdown-item" href="../pages/selectTurma_faltas.html">Faltas</a></li>
+              </ul>
+            </li> -->
+
+          </ul>
+        </div>
+      </div>
+      <a href="homeProf.html" class="mx-auto d-block">
+        <img src="../../icons/smartclass.png" alt="smartclassIcon" class="img-home">
+      </a>
+    </div>
+  </nav>
+
+
+
+  <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
+  <div class="container">
+    <h1>Lista de Responsáveis</h1>
+
+    <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody id="responsavelList" class="overflow-auto">
+          <!-- データはここに挿入されます -->
+        </tbody>
+      </table>
+    </div>
+
+    <hr>
+
+    <!-- 入力欄 -->
+    <div class="row">
+      <!-- Responsavelの追加 -->
+      <div class="col-md-6">
+        <h2>Cadastrar novo Responsável</h2>
+        <form id="addResponsavelForm">
+          <div class="form-group">
+            <input type="text" class="form-control" id="responsavelName" placeholder="Nome do Responsável" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="responsavelCpf" placeholder="CPF do Responsável" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="responsavelEndereco" placeholder="Endereço do Responsável"
+              required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="responsavelTelefone" placeholder="Telefone do Responsável"
+              required>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" id="responsavelEmail" placeholder="Email do Responsável" required>
+          </div>
+          <div class="form-group">
+            <input type="senha" class="form-control" id="responsavelSenha" placeholder="Senha do Responsável" required>
+          </div>
+          
+          <!-- <div class="form-group">
+            <select class="form-control" id="responsavelIdEscola" required>
+              <option value="" disabled selected>Escolha a escola</option>
+            </select>
+          </div> -->
+
+          <button type="submit" class="btn btn-primary">Adicionar</button>
+        </form>
+      </div>
+
+      <!-- Responsavelの編集 -->
+      <div class="col-md-6">
+        <h2>Editar</h2>
+        <form id="updateResponsavelForm">
+          <div class="form-group">
+            <input type="text" class="form-control" id="editResponsavelId" placeholder="ID do Responsável" required
+              disabled>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="editResponsavelName" placeholder="Nome do Responsável" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="editResponsavelCpf" placeholder="CPF do Responsável" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="editResponsavelEndereco" placeholder="Endereço do Responsável"
+              required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="editResponsavelTelefone" placeholder="Telefone do Responsável"
+              required>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" id="editResponsavelEmail" placeholder="Email do Responsável"
+              required>
+          </div>
+          <!-- 
+          <div class="form-group">
+            <select class="form-control" id="editResponsavelIdEscola" required>
+              <option value="" disabled selected>Escolha a escola</option>
+            </select>
+          </div> -->
+
+          <button type="submit" class="btn btn-primary">Atualizar</button>
+          <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Bootstrap Datepicker JS -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+  <script src="../../js/responsavel.js">
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+body {
+    background-color: #000000; /* Fundo preto */
+    color: #fff; /* Texto branco */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#logo-container {
+    text-align: center;
+    margin-bottom: 20px; /* Ajuste a margem conforme necessário */
+}
+
+#logo {
+    width: 200px; /* Ajuste a largura conforme necessário */
+    height: auto; /* Isso mantém a proporção da imagem */
+    border-radius: 50%;
+}
+
+#reset-password-container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.password-container input {
+    width: 100%;
+    padding: 8px;
+    background-color: #000; /* Campo de texto preto */
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff; /* Texto branco */
+}
+
+
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #fff; /* Ícone branco */
+    cursor: pointer;
+}
+
+#reset-button {
+    background-color: #000; /* Botão preto */
+    color: #fff; /* Texto branco */
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 45%; /* Centraliza o botão */
+}
+
+#errorMessage {
+    color: red; /* Mensagem de erro em vermelho */
+    margin-top: 10px;
+    display: none; /* Oculta a mensagem de erro por padrão */
+    text-align: center;
+}

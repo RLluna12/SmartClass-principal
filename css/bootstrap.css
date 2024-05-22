@@ -1,0 +1,34 @@
+/* ナビゲーションバーの高さに合わせた余白 */
+body {
+  padding-top: 70px; /* デフォルトのナビゲーションバーの高さは56px */
+  background-color: #d6d6d6;
+}
+.form-group select {
+    height: 38px; /* サイズを調整する必要がある場合は適宜調整してください */
+    width: auto;
+}
+/* Professor部分 table */
+
+
+.img-home {
+  width: 50px;
+  height: 50px;
+  border-radius:50%;
+} 
+.img-aluno {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+} 
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.img-alunoMini {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+} 

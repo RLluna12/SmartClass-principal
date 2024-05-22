@@ -1,0 +1,21 @@
+{
+  "name": "smartclass2",
+  "version": "1.0.0",
+  "description": "-- Escola テーブルを作成\r CREATE TABLE Escola (\r id_escola INT AUTO_INCREMENT PRIMARY KEY,\r nome_escola VARCHAR(255),\r email_escola VARCHAR(255)\r );",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.9.13"
+  }
+}

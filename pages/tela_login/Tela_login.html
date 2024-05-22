@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Adiciona os links para os arquivos do Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link para o arquivo CSS externo -->
+</head>
+<body>
+    <div id="logo-container">
+        <img src="logo.jpg" alt="Logo" id="logo">
+    </div>
+    <div id="login-container">
+        <input type="text" id="email" placeholder="Email">
+        <div class="password-container">
+            <input type="password" id="password" placeholder="Senha">
+            <button id="show-password-btn" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class="far fa-eye"></i> <!-- Ícone do olho fechado -->
+            </button>
+        </div>
+        <p id="forgot-password"><a href="../Trocar_senha/trocar_senha.html">Esqueci minha senha</a></p>
+        <button id="login-button" class="btn btn-dark">Entrar</button>
+        <img id="loading-spinner" src="https://media.giphy.com/media/17mNCcKU1mJlrbXodo/giphy.gif" alt="Carregando...">
+        <div id="error-message-container"> <!-- Container para a mensagem de erro -->
+            <p id="error-message" class="hidden"></p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById("password");
+            const eyeIcon = document.getElementById("eye-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("far", "fa-eye");
+                eyeIcon.classList.add("fas", "fa-eye"); // Altera para o ícone do olho aberto
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fas", "fa-eye");
+                eyeIcon.classList.add("far", "fa-eye"); // Altera de volta para o ícone do olho fechado
+            }
+        }
+
+        $(document).ready(function() {
+            const apiUrl = 'http://localhost:3000/api/teste'; // URL da sua API de login
+
+            $('#email, #password').keypress(function(event) {
+                if (event.which === 13) {
+                    $('#login-button').click();
+                }
+            });
+
+            $('#login-button').click(function() {
+                const email = $('#email').val();
+                const password = $('#password').val();
+
+                if (!email || !password) {
+                    $('#error-message').text('Por favor, preencha o email e a senha.').show();
+                    $('#error-message-container').addClass('error-visible');
+                    return;
+                }
+
+                $('#error-message').hide();
+                $('#loading-spinner').show();
+                $('#error-message-container').removeClass('error-visible');
+
+                $.ajax({
+                    type: 'POST',
+                    url: apiUrl,
+                    data: JSON.stringify({ email: email, password: password }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        if (response.success) {
+                            if (email.endsWith('@uscsonline.com.br')) {
+                                window.location.href = 'https://www.youtube.com';
+                            } else if (email.endsWith('@outlook.com')) {
+                                window.location.href = 'https://www.google.com/maps';
+                            }
+                        } else {
+                            $('#error-message').text('Credenciais inválidas. Verifique seu email e senha.').show();
+                            $('#error-message-container').addClass('error-visible');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro na requisição AJAX:', error);
+                        $('#error-message').text('Ocorreu um erro ao tentar fazer login. Verifique seu email e senha.').show();
+                        $('#error-message-container').addClass('error-visible');
+                    },
+                    complete: function() {
+                        $('#loading-spinner').hide();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

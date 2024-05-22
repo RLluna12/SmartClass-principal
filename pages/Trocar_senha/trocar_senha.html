@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trocar Senha</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="styles2.css" rel="stylesheet"> <!-- Vinculando o arquivo CSS externo -->
+</head>
+<body>
+    <img id="logo" src="logo.png" alt="logo">
+
+    <div class="container">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><img src="alerta.png" id="alerta" alt="alerta"></span>
+            </div>
+            <p>Esqueceu a senha? Coloque seu email abaixo para redefinir.</p>
+        </div>
+        
+        <input type="text" class="form-control" id="emailInput" placeholder="Seu Email">
+
+        <button class="btn btn-dark" onclick="enviar()">Enviar</button>
+    </div>
+    
+    <script>
+    function enviar() {
+    var email = document.getElementById('emailInput').value;
+
+     // Verificar se o campo de email está vazio
+     if (!email) {
+            alert('Por favor, digite seu email.');
+            return;
+        }
+
+    // Verificar o formato do email usando uma expressão regular
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert('Formato de email inválido. Por favor, insira um email válido.');
+        return;
+    }
+
+    // Verificar se o email está cadastrado no backend
+    fetch('http://localhost:3000/verificarEmail', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email: email })
+})
+.then(response => {
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error('Erro ao verificar email');
+})
+.then(data => {
+    console.log('Resposta do backend:', data);
+    alert(data.message); // Exibe a mensagem do backend
+    if (data.message === 'Email cadastrado') {
+        enviarEmailRedefinicao(email); // Envie o email de redefinição se o email estiver cadastrado
+    }
+})
+.catch(error => {
+    console.error('Erro:', error);
+    alert('Erro ao verificar email. Por favor, tente novamente.');
+});
+}
+
+function enviarEmailRedefinicao(email) {
+    // Enviar solicitação para o backend para enviar o email de redefinição
+    fetch('http://localhost:3000/enviarEmailRedefinicao', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text();
+        }
+        throw new Error('Erro ao enviar email de redefinição');
+    })
+    .then(data => {
+        alert(data); // Exibir mensagem de sucesso ou erro
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao enviar email de redefinição');
+    });
+}
+
+    </script>
+</body>
+</html>
