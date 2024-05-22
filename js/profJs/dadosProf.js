@@ -1,7 +1,7 @@
 const apiUrlProf = 'http://localhost:3000/professores'
 
 document.addEventListener('DOMContentLoaded', function () {
-  const id_prof = 2 // 表示したい学生のID
+  const id_prof = profID // 表示したい学生のID
   const url = `${apiUrlProf}/${id_prof}`
 
   fetch(url)
