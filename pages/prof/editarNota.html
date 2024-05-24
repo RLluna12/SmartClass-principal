@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apricar faltas</title>
+  <title>Editar Notas</title>
   <!-- 追加：外部のスタイルシート -->
   <!-- <link rel="stylesheet" href="styles/professores.css" /> -->
   <!-- <link rel="stylesheet" href="styles/style.css" /> -->
@@ -15,40 +15,6 @@
   <!-- Bootstrap Datepicker CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
     rel="stylesheet">
-  <style>
-    /* CSS */
-    .aluno-card {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-      margin: 10px;
-      display: inline-block;
-      width: 200px;
-      text-align: center;
-      background-color: beige;
-    }
-
-    .aluno-card img {
-      max-width: 100%;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .aluno-card span {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    /* 新しいスタイル */
-    #faltaContainer {
-      margin-top: 20px;
-    }
-
-    #faltaContainer span {
-      display: block;
-      font-weight: bold;
-    }
-  </style>
 </head>
 
 <body>
@@ -140,18 +106,44 @@
 
   <!-- 以下、ベースのHTMLファイルのコンテンツを続ける -->
   <div class="container mt-5">
-    <h1>Aplicar Faltas</h1>
-    <h1>Alunos</h1>
-    <select id="turmaSelect">
-      <option value="" disabled selected>Escolha a Turma</option>
-    </select>
-    <select id="disciplinaSelect">
-      <option value="" disabled selected>Escolha a Disciplina</option>
-    </select>
-    <div id="faltaContainer"></div> <!-- 追加 -->
-    <div id="alunosContainer"></div>
-
+    <h1>Editar Nota</h1>
+    <form id="editNotaForm">
+      <div class="form-group">
+        <label for="nomeAluno">Nome do Aluno</label>
+        <input type="text" class="form-control" id="nomeAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="faltasAluno">Faltas do Aluno</label>
+        <input type="text" class="form-control" id="faltasAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="n1Input">N1</label>
+        <input type="number" class="form-control" id="n1Input">
+      </div>
+      <div class="form-group">
+        <label for="apInput">AP</label>
+        <input type="number" class="form-control" id="apInput">
+      </div>
+      <div class="form-group">
+        <label for="aiInput">AI</label>
+        <input type="number" class="form-control" id="aiInput">
+      </div>
+      <div class="form-group">
+        <label for="anoAluno">Ano</label>
+        <input type="number" class="form-control" id="anoAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="matriculaAluno">Data de matricula</label>
+        <input type="text" class="form-control" id="matriculaAluno" disabled>
+      </div>
+      <div class="form-group">
+        <label for="semestreAluno">Semestre</label>
+        <input type="number" class="form-control" id="semestreAluno" disabled>
+      </div>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
   </div>
+
 
 
 
@@ -167,7 +159,7 @@
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-  <script src="../../js/profJs/apricarFaltas2.js">
+  <script src="../../js/profJs/editarNota.js">
   </script>
 </body>
 

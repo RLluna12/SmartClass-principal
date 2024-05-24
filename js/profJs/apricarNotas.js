@@ -33,11 +33,13 @@ function populateYearSelect() {
   }
   yearSelect.disabled = false
 }
+
 // Turmaが選択された時に関係のあるDisciplinasを取得しセレクトボックスを更新
 document.getElementById('turmaSelect').addEventListener('change', event => {
   const turmaId = event.target.value
   fetchDisciplinasByTurma(turmaId)
 })
+
 function fetchDisciplinasByTurma(turmaId) {
   fetch(`http://localhost:3000/turma_disciplinas/${turmaId}/disciplinas`)
     .then(response => response.json())
@@ -54,6 +56,7 @@ function fetchDisciplinasByTurma(turmaId) {
     })
     .catch(error => console.error('Error fetching Disciplinas:', error))
 }
+
 // 検索ボタンのクリックイベント
 document.getElementById('searchButton').addEventListener('click', () => {
   const turmaId = document.getElementById('turmaSelect').value
@@ -76,14 +79,13 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
     .then(response => response.json())
     .then(data => {
       const resultContainer = document.getElementById('resultContainer')
-      console.log(data)
       resultContainer.innerHTML = ''
       if (data.length > 0) {
         const table = document.createElement('table')
         table.className = 'table'
         const thead = document.createElement('thead')
         const headerRow = document.createElement('tr')
-        ;['Selecionar', 'Foto do Aluno', 'Nome do Aluno', 'N1', 'AP', 'AI'].forEach(text => {
+        ;['Foto do Aluno', 'Nome do Aluno', 'N1', 'AP', 'AI', 'Ações'].forEach(text => {
           const th = document.createElement('th')
           th.textContent = text
           headerRow.appendChild(th)
@@ -94,12 +96,6 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
         const tbody = document.createElement('tbody')
         data.forEach(item => {
           const row = document.createElement('tr')
-          const selectCell = document.createElement('td')
-          const checkbox = document.createElement('input')
-          checkbox.type = 'checkbox'
-          checkbox.value = item.id_notas_faltas
-          selectCell.appendChild(checkbox)
-          row.appendChild(selectCell)
 
           // 写真セル
           const photoCell = document.createElement('td')
@@ -118,7 +114,6 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           // N1セル
           const n1Cell = document.createElement('td')
           n1Cell.textContent = item.N1
-          console.log(item.N1)
           row.appendChild(n1Cell)
 
           // APセル
@@ -131,15 +126,23 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
           aiCell.textContent = item.AI
           row.appendChild(aiCell)
 
+          // アクションセル（ボタン）
+          const actionCell = document.createElement('td')
+          const editButton = document.createElement('button')
+          editButton.textContent = 'Editar'
+          editButton.classList.add('btn', 'btn-primary')
+          editButton.addEventListener('click', () => {
+            window.location.href = `editarNota.html?alunoId=${item.id_aluno}&disciplinaId=${disciplinaId}&idNotasFaltas=${item.id_notas_faltas}`
+          })
+          actionCell.appendChild(editButton)
+          row.appendChild(actionCell)
+
           tbody.appendChild(row)
         })
         table.appendChild(tbody)
         resultContainer.appendChild(table)
-
-        document.getElementById('applyFaltasButton').style.display = 'block'
       } else {
         resultContainer.textContent = '該当するデータが見つかりませんでした'
-        document.getElementById('applyFaltasButton').style.display = 'none'
       }
     })
     .catch(error => console.error('Error fetching notas_faltas:', error))
