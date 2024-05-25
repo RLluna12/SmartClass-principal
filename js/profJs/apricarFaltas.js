@@ -129,7 +129,7 @@ function fetchNotasFaltas(turmaId, disciplinaId, year, semestre) {
 
         document.getElementById('applyFaltasButton').style.display = 'block'
       } else {
-        resultContainer.textContent = '該当するデータが見つかりませんでした'
+        resultContainer.textContent = 'Nenhum dado correspondente foi encontrado'
         document.getElementById('applyFaltasButton').style.display = 'none'
       }
     })
@@ -160,10 +160,10 @@ function applyFaltas(ids) {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        alert('Faltasが適用されました')
+        alert('Faltas aplicadas')
         document.getElementById('searchButton').click() // 検索を再実行して結果を更新
       } else {
-        alert('Faltasを適用できませんでした')
+        alert('Falha ao aplicar Faltas')
       }
     })
     .catch(error => console.error('Error applying faltas:', error))
