@@ -105,6 +105,21 @@ app.post('/usuarios', (req, res) => {
               }
             }
           );
+        } 
+        else if (id_perfil == 4) { // Se o perfil for responsavel
+          // Inserir o responsavel na tabela responsavel
+          connection.query(
+            'INSERT INTO responsavel (id_usuario) VALUES (?)',
+            [id_usuario],
+            (err) => {
+              if (err) {
+                console.error('Erro ao adicionar responsavel ao MySQL:', err);
+                res.status(500).json({ message: 'Erro ao cadastrar o responsavel' });
+              } else {
+                res.status(201).json({ message: 'Usuário e responsavel cadastrados com sucesso!' });
+              }
+            }
+          );
         } else {
           // Se for outro perfil
           res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });
