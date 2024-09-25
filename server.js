@@ -45,6 +45,75 @@ let alunoResps = []
 let turmas = []
 let turmaDisciplinas = []
 
+
+// Middleware para analisar corpos de requisição
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(cors())
+
+// Rota para cadastro de usuários
+app.post('/usuarios', (req, res) => {
+  const {
+    nome_usuario,
+    cpf_usuario,
+    endereco_usuario,
+    telefone_usuario,
+    email_usuario,
+    nascimento_usuario,
+    senha,
+    id_perfil,
+    ra_aluno,
+    data_matricula
+  } = req.body;
+
+  // Inserir o usuário na tabela de usuários
+  connection.query(
+    'INSERT INTO usuario (nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil],
+    (err, result) => {
+      if (err) {
+        console.error('Erro ao adicionar usuário ao MySQL:', err);
+        res.status(500).json({ message: 'Erro ao cadastrar o usuário' });
+      } else {
+        const id_usuario = result.insertId; // Pegar o ID do usuário recém-adicionado
+
+        if (id_perfil == 3) { // Se o perfil for Aluno
+          // Inserir o aluno na tabela aluno
+          connection.query(
+            'INSERT INTO aluno (id_usuario, ra_aluno, data_matricula) VALUES (?, ?, ?)',
+            [id_usuario, ra_aluno, data_matricula],
+            (err) => {
+              if (err) {
+                console.error('Erro ao adicionar aluno ao MySQL:', err);
+                res.status(500).json({ message: 'Erro ao cadastrar o aluno' });
+              } else {
+                res.status(201).json({ message: 'Usuário e Aluno cadastrados com sucesso!' });
+              }
+            }
+          );
+        } else if (id_perfil == 2) { // Se o perfil for Professor
+          // Inserir o professor na tabela professor
+          connection.query(
+            'INSERT INTO professor (id_usuario) VALUES (?)',
+            [id_usuario],
+            (err) => {
+              if (err) {
+                console.error('Erro ao adicionar professor ao MySQL:', err);
+                res.status(500).json({ message: 'Erro ao cadastrar o professor' });
+              } else {
+                res.status(201).json({ message: 'Usuário e Professor cadastrados com sucesso!' });
+              }
+            }
+          );
+        } else {
+          // Se for outro perfil
+          res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });
+        }
+      }
+    }
+  );
+});
+
 // Professorのサーバー管理に関わる部分
 // ProfessorTableのデータ取得
 connection.query('SELECT * FROM Professor;', (err, results) => {
