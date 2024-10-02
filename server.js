@@ -12,10 +12,10 @@ app.use(express.json())
 app.use(cors())
 // MySQL接続設定
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'smartclass'
+  host: '193.203.175.141',
+  user: 'u507973385_Lucas',
+  password: 'Lucas12345.',
+  database: 'u507973385_Lucas'
 })
 connection.connect(err => {
   if (err) {
