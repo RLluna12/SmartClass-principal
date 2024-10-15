@@ -12,10 +12,10 @@ app.use(express.json())
 app.use(cors())
 // MySQL接続設定
 const connection = mysql.createConnection({
-  host: '193.203.175.141',
-  user: 'u507973385_Lucas',
-  password: 'Lucas12345.',
-  database: 'u507973385_Lucas'
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'smartclass'
 })
 connection.connect(err => {
   if (err) {
@@ -129,9 +129,103 @@ app.post('/usuarios', (req, res) => {
   );
 });
 
+
+
+
+connection.query('SELECT * FROM publicacao;', (err, results) => {
+  if (err) {
+    console.error('Ocorreu um erro na tabela publicacao: ' + err);
+  } else {
+    publicacoes = results;
+  }
+});
+
+// Listar todas as publicações
+app.get('/publicacoes', (req, res) => {
+  res.json(publicacoes);
+});
+
+// Obter uma publicação específica por ID
+app.get('/publicacoes/:id_pub', (req, res) => {
+  const publicacaoID = parseInt(req.params.id_pub);
+  const publicacao = publicacoes.find(pub => pub.id_pub === publicacaoID);
+  if (publicacao) {
+    res.json(publicacao);
+  } else {
+    res.status(404).json({ message: 'Não foi possível localizar a publicação' });
+  }
+});
+
+// Adicionar uma nova publicação
+app.post('/publicacoes', (req, res) => {
+  const newPublicacao = req.body;
+  connection.query(
+    'INSERT INTO publicacao (comentario, data_pub) VALUES (?, ?)',
+    [newPublicacao.comentario, newPublicacao.data_pub],
+    (err, result) => {
+      if (err) {
+        console.error('Error adding data to MySQL: ' + err);
+        res.status(500).json({ message: 'Não foi possível adicionar a publicação' });
+      } else {
+        newPublicacao.id_pub = result.insertId;
+        publicacoes.push(newPublicacao);
+        res.status(201).json(newPublicacao);
+      }
+    }
+  );
+});
+
+// Atualizar uma publicação existente
+app.put('/publicacoes/:id_pub', (req, res) => {
+  const id_pub = parseInt(req.params.id_pub);
+  const updatedPublicacao = req.body;
+  const index = publicacoes.findIndex(pub => pub.id_pub === id_pub);
+  if (index !== -1) {
+    connection.query(
+      'UPDATE publicacao SET comentario=?, data_pub=? WHERE id_pub=?',
+      [updatedPublicacao.comentario, updatedPublicacao.data_pub, id_pub],
+      err => {
+        if (err) {
+          console.error('Error updating data in MySQL: ' + err);
+          res.status(500).json({ message: 'Publicação não pôde ser atualizada' });
+        } else {
+          publicacoes[index] = { ...publicacoes[index], ...updatedPublicacao };
+          res.json(publicacoes[index]);
+        }
+      }
+    );
+  } else {
+    res.status(404).json({ message: 'Publicação não encontrada' });
+  }
+});
+
+// Deletar uma publicação existente
+app.delete('/publicacoes/:id_pub', (req, res) => {
+  const id_pub = parseInt(req.params.id_pub);
+  const index = publicacoes.findIndex(pub => pub.id_pub === id_pub);
+  if (index !== -1) {
+    connection.query('DELETE FROM publicacao WHERE id_pub=?', [id_pub], err => {
+      if (err) {
+        console.error('Erro ao excluir dados do MySQL: ' + err);
+        res.status(500).json({ message: 'Não foi possível excluir a publicação' });
+      } else {
+        const removedPublicacao = publicacoes.splice(index, 1);
+        res.json(removedPublicacao[0]);
+      }
+    });
+  } else {
+    res.status(404).json({ message: 'Não foi possível localizar a publicação' });
+  }
+});
+
+
+
+
+
+
 // Professorのサーバー管理に関わる部分
 // ProfessorTableのデータ取得
-connection.query('SELECT * FROM Professor;', (err, results) => {
+connection.query('SELECT * FROM professor;', (err, results) => {
   if (err) {
     console.error('Ocorreu um erro na ProfessorTable: ' + err)
   } else {
@@ -156,7 +250,7 @@ app.get('/professores/:id_prof', (req, res) => {
 app.post('/professores', (req, res) => {
   const newProfessor = req.body
   connection.query(
-    'INSERT INTO Professor (nome_prof, cpf_prof, telefone_prof, email_consti_prof, email_prof, nascimento_prof, endereco_prof, senha, level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO professor (nome_prof, cpf_prof, telefone_prof, email_consti_prof, email_prof, nascimento_prof, endereco_prof, senha, level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     [
       newProfessor.nome_prof,
       newProfessor.cpf_prof,
@@ -187,7 +281,7 @@ app.put('/professores/:id_prof', (req, res) => {
   const index = professores.findIndex(professor => professor.id_prof === id_prof)
   if (index !== -1) {
     connection.query(
-      'UPDATE Professor SET nome_prof=?, cpf_prof=?, telefone_prof=?, email_consti_prof=?, email_prof=?, nascimento_prof=?, endereco_prof=?, senha=?, level=? WHERE id_prof=?',
+      'UPDATE professor SET nome_prof=?, cpf_prof=?, telefone_prof=?, email_consti_prof=?, email_prof=?, nascimento_prof=?, endereco_prof=?, senha=?, level=? WHERE id_prof=?',
       [
         updatedProfessor.nome_prof,
         updatedProfessor.cpf_prof,
@@ -219,7 +313,7 @@ app.delete('/professores/:id_prof', (req, res) => {
   const id_prof = parseInt(req.params.id_prof)
   const index = professores.findIndex(professor => professor.id_prof === id_prof)
   if (index !== -1) {
-    connection.query('DELETE FROM Professor WHERE id_prof=?', [id_prof], err => {
+    connection.query('DELETE FROM professor WHERE id_prof=?', [id_prof], err => {
       if (err) {
         console.error('ProfessorTable - Erro ao excluir dados do MySQL: ' + err)
         res.status(500).json({ message: 'Não foi possível excluir' })
@@ -235,7 +329,7 @@ app.delete('/professores/:id_prof', (req, res) => {
 
 // Turmaのサーバー管理に関わる部分
 // TurmaTableのデータ取得
-connection.query('SELECT * FROM Turma;', (err, results) => {
+connection.query('SELECT * FROM turma;', (err, results) => {
   if (err) {
     console.error('Ocorreu um erro na Turma Table: ' + err)
   } else {
@@ -260,7 +354,7 @@ app.get('/turmas/:id_turma', (req, res) => {
 app.post('/turmas', (req, res) => {
   const newTurma = req.body
   connection.query(
-    'INSERT INTO Turma (nome_turma, ano, semestre) VALUES (?, ?, ?)',
+    'INSERT INTO turma (nome_turma, ano, semestre) VALUES (?, ?, ?)',
     [newTurma.nome_turma, newTurma.ano, newTurma.semestre],
     (err, result) => {
       if (err) {

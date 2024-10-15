@@ -1,237 +1,660 @@
-CREATE TABLE Responsavel (
-    id_resp INT AUTO_INCREMENT PRIMARY KEY,
-    nome_resp VARCHAR(255),
-    cpf_resp VARCHAR(255) UNIQUE,
-    endereco_resp VARCHAR(255),
-    telefone_resp VARCHAR(255),
-    email_resp VARCHAR(128) UNIQUE,
-    senha_resp VARCHAR(128)
-);
+-- Banco de dados: `smartclass`
+--
 
-CREATE TABLE Turma (
-    id_turma INT AUTO_INCREMENT PRIMARY KEY,
-    nome_turma VARCHAR(255),
-    ano YEAR,
-    semestre INT
-);
+-- --------------------------------------------------------
 
-CREATE TABLE Aluno (
-    id_aluno INT AUTO_INCREMENT PRIMARY KEY,
-    nome_aluno VARCHAR(255),
-    cpf_aluno VARCHAR(11),
-    endereco_aluno VARCHAR(255),
-    telefone_aluno VARCHAR(255),
-    email_aluno VARCHAR(128),
-    nascimento_aluno DATE,
-    ra_aluno VARCHAR(255),
-    data_matricula DATE,
-    foto VARCHAR(255),
-    senha VARCHAR(255),
-    id_turma INT,
-    FOREIGN KEY (id_turma) REFERENCES Turma(id_turma)
-);
+--
+-- Estrutura da tabela `aluno`
+--
 
-CREATE TABLE Responsavel_Aluno (
-    id_resp_aluno INT AUTO_INCREMENT PRIMARY KEY,
-    id_resp INT,
-    id_aluno INT,
-    FOREIGN KEY (id_resp) REFERENCES Responsavel(id_resp),
-    FOREIGN KEY (id_aluno) REFERENCES Aluno(id_aluno)
-);
+CREATE TABLE `aluno` (
+  `id_aluno` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `ra_aluno` varchar(255) NOT NULL,
+  `data_matricula` date NOT NULL,
+  `id_turma` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE Evento (
-    id_evento INT AUTO_INCREMENT PRIMARY KEY,
-    nome_evento VARCHAR(255),
-    link_evento VARCHAR(255),
-    data_evento DATE
-);
+--
+-- Extraindo dados da tabela `aluno`
+--
 
-CREATE TABLE Evento_aluno (
-    id_evento_aluno INT AUTO_INCREMENT PRIMARY KEY,
-    id_evento INT,
-    id_aluno INT,
-    FOREIGN KEY (id_evento) REFERENCES Evento(id_evento),
-    FOREIGN KEY (id_aluno) REFERENCES Aluno(id_aluno)
-);
+INSERT INTO `aluno` (`id_aluno`, `id_usuario`, `ra_aluno`, `data_matricula`, `id_turma`) VALUES
+(1, 1, 'RA123456', '2022-01-01', 1),
+(2, 2, 'RA234567', '2022-01-01', 1),
+(3, 5, '99999999', '2024-09-18', NULL),
+(4, 7, '55555555', '2024-09-12', NULL);
 
-CREATE TABLE Professor (
-    id_prof INT AUTO_INCREMENT PRIMARY KEY,
-    nome_prof VARCHAR(255),
-    cpf_prof VARCHAR(11) UNIQUE,
-    telefone_prof VARCHAR(255),
-    email_consti_prof VARCHAR(128) UNIQUE,
-    email_prof VARCHAR(128) UNIQUE,
-    nascimento_prof DATE,
-    endereco_prof VARCHAR(128),
-    senha VARCHAR(255),
-    nivel INT
-);
+-- --------------------------------------------------------
 
-CREATE TABLE Evento_professor (
-    id_evento_prof INT AUTO_INCREMENT PRIMARY KEY,
-    id_evento INT,
-    id_prof INT,
-    FOREIGN KEY (id_evento) REFERENCES Evento(id_evento),
-    FOREIGN KEY (id_prof) REFERENCES Professor(id_prof)
-);
+--
+-- Estrutura da tabela `aluno_disciplina`
+--
 
-CREATE TABLE Disciplina (
-    id_disciplina INT AUTO_INCREMENT PRIMARY KEY,
-    disciplina VARCHAR(255),
-    horario INT
-);
+CREATE TABLE `aluno_disciplina` (
+  `id_aluno_disciplina` int(11) NOT NULL,
+  `id_aluno` int(11) NOT NULL,
+  `id_disciplina` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE Aluno_disciplina (
-    id_aluno_disc INT AUTO_INCREMENT PRIMARY KEY,
-    id_aluno INT,
-    id_disciplina INT,
-    FOREIGN KEY (id_aluno) REFERENCES Aluno(id_aluno),
-    FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id_disciplina)
-);
+-- --------------------------------------------------------
 
-CREATE TABLE Notas_faltas (
-    id_notas_faltas INT AUTO_INCREMENT PRIMARY KEY,
-    id_disciplina INT,
-    id_aluno INT,
-    N1 REAL,
-    AI REAL,
-    AP REAL,
-    faltas INT,
-    academic_year YEAR,
-    data_matricula DATE,
-    semestre INT,
-    FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id_disciplina),
-    FOREIGN KEY (id_aluno) REFERENCES Aluno(id_aluno)
-);
+--
+-- Estrutura da tabela `disciplina`
+--
 
-CREATE TABLE Prof_Disciplina (
-    id_prof_disc INT AUTO_INCREMENT PRIMARY KEY,
-    id_prof INT,
-    id_disciplina INT,
-    FOREIGN KEY (id_prof) REFERENCES Professor(id_prof),
-    FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id_disciplina)
-);
+CREATE TABLE `disciplina` (
+  `id_disciplina` int(11) NOT NULL,
+  `nome_disciplina` varchar(255) NOT NULL,
+  `horario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE Turma_Disciplina (
-    id_turma_disc INT AUTO_INCREMENT PRIMARY KEY,
-    id_turma INT,
-    id_disciplina INT,
-    FOREIGN KEY (id_turma) REFERENCES Turma(id_turma),
-    FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id_disciplina)
-);
+--
+-- Extraindo dados da tabela `disciplina`
+--
 
+INSERT INTO `disciplina` (`id_disciplina`, `nome_disciplina`, `horario`) VALUES
+(1, 'MatemÃƒÆ’Ã‚Â¡tica', 1),
+(2, 'PortuguÃƒÆ’Ã‚Âªs', 2),
+(3, 'HistÃƒÆ’Ã‚Â³ria', 3),
+(4, 'Geografia', 4),
+(5, 'CiÃƒÆ’Ã‚Âªncias', 5);
 
+-- --------------------------------------------------------
 
+--
+-- Estrutura da tabela `evento`
+--
 
+CREATE TABLE `evento` (
+  `id_evento` int(11) NOT NULL,
+  `nome_evento` varchar(255) NOT NULL,
+  `link_evento` varchar(255) DEFAULT NULL,
+  `data_evento` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `evento`
+--
 
+INSERT INTO `evento` (`id_evento`, `nome_evento`, `link_evento`, `data_evento`) VALUES
+(1, 'ReuniÃƒÆ’Ã‚Â£o de Pais', 'http://example.com/reuniao', '2024-10-10'),
+(2, 'Feira de CiÃƒÆ’Ã‚Âªncias', 'http://example.com/feira', '2024-11-15');
 
+-- --------------------------------------------------------
 
--- データの挿入
-INSERT INTO Responsavel (nome_resp, cpf_resp, endereco_resp, telefone_resp, email_resp, senha_resp) VALUES
-('John Doe', '12345678901', '123 Main St', '123-456-7890', 'john.doe@example.com', 'senha123'),
-('Jane Smith', '23456789012', '456 Oak Ave', '456-789-0123', 'jane.smith@example.com', 'senha123'),
-('Michael Johnson', '34567890123', '789 Elm St', '789-012-3456', 'michael.johnson@example.com', 'senha123'),
-('Emily Davis', '45678901234', '101 Pine St', '987-654-3210', 'emily.davis@example.com', 'senha123'),
-('David Wilson', '56789012345', '202 Maple Ave', '876-543-2109', 'david.wilson@example.com', 'senha123');
+--
+-- Estrutura da tabela `evento_aluno`
+--
 
-INSERT INTO Professor (nome_prof, cpf_prof, telefone_prof, email_consti_prof, email_prof, nascimento_prof, endereco_prof, senha) VALUES
-('John Smith', '12345678901', '123-456-7890', 'john.smith.const@uscsonline.com', 'john.smith@outlook.com', '1980-05-15', '123 Main St', 'senha123'),
-('Emily Johnson', '23456789012', '456-789-0123', 'emily.johnson.const@uscsonline.com', 'emily.johnson@outlook.com', '1975-10-20', '456 Oak Ave', 'senha123'),
-('Michael Davis', '34567890123', '789-012-3456', 'michael.davis.const@uscsonline.com', 'michael.davis@outlook.com', '1988-03-08', '789 Elm St', 'senha123'),
-('Jane Wilson', '45678901234', '987-654-3210', 'jane.wilson.const@uscsonline.com', 'jane.wilson@outlook.com', '1992-12-18', '101 Pine St', 'senha123'),
-('David Brown', '56789012345', '876-543-2109', 'david.brown.const@uscsonline.com', 'david.brown@outlook.com', '1983-07-25', '202 Maple Ave', 'senha123');
+CREATE TABLE `evento_aluno` (
+  `id_evento_aluno` int(11) NOT NULL,
+  `id_evento` int(11) NOT NULL,
+  `id_aluno` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Turma (nome_turma, ano, semestre) VALUES
-('Turma A', '2022', 1),
-('Turma B', '2023', 1),
-('Turma C', '2024', 2),
-('Turma D', '2024', 2),
-('Turma E', '2024', 1);
+--
+-- Extraindo dados da tabela `evento_aluno`
+--
 
-INSERT INTO Disciplina (disciplina, horario) VALUES
-('Mathematics', 1),
-('Science', 2),
-('History', 3),
-('Literature', 4),
-('Computer Science', 5);
+INSERT INTO `evento_aluno` (`id_evento_aluno`, `id_evento`, `id_aluno`) VALUES
+(1, 1, 1),
+(2, 2, 2);
 
-INSERT INTO Aluno (nome_aluno, cpf_aluno, endereco_aluno, telefone_aluno, email_aluno, nascimento_aluno, ra_aluno, data_matricula, foto, senha, id_turma) VALUES
-('John Doe', '12345678901', '123 Main St', '123-456-7890', 'john.doe@uscsonline.com.br', '1998-05-15', 'A123456789', '2022-01-15', NULL, 'senha123', 1),
-('Jane Smith', '23456789012', '456 Oak Ave', '456-789-0123', 'jane.smith@uscsonline.com.br', '1999-03-20', 'B234567890', '2024-01-20', NULL, 'senha123', 1),
-('Michael Johnson', '34567890123', '789 Elm St', '789-012-3456', 'michael.johnson@uscsonline.com.br', '2000-07-08', 'C345678901', '2024-01-25', NULL, 'senha123', 2),
-('Emily Davis', '45678901234', '101 Pine St', '987-654-3210', 'emily.davis@uscsonline.com.br', '2001-11-18', 'D456789012', '2024-01-30', NULL, 'senha123', 2),
-('David Wilson', '56789012345', '202 Maple Ave', '876-543-2109', 'david.wilson@uscsonline.com.br', '2002-09-25', 'E567890123', '2024-02-05', NULL, 'senha123', 3);
+-- --------------------------------------------------------
 
-INSERT INTO Responsavel_Aluno (id_resp, id_aluno) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+--
+-- Estrutura da tabela `evento_professor`
+--
 
-INSERT INTO Evento (nome_evento, link_evento, data_evento) VALUES
-('Conference', 'http://example.com/conference', '2024-05-10'),
-('Workshop', 'http://example.com/workshop', '2024-06-15'),
-('Seminar', 'http://example.com/seminar', '2024-07-20'),
-('Training', 'http://example.com/training', '2024-08-25'),
-('Symposium', 'http://example.com/symposium', '2024-09-30');
+CREATE TABLE `evento_professor` (
+  `id_evento_professor` int(11) NOT NULL,
+  `id_evento` int(11) NOT NULL,
+  `id_professor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Evento_aluno (id_evento, id_aluno) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+--
+-- Extraindo dados da tabela `evento_professor`
+--
 
-INSERT INTO Aluno_disciplina (id_aluno, id_disciplina) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+INSERT INTO `evento_professor` (`id_evento_professor`, `id_evento`, `id_professor`) VALUES
+(1, 1, 1),
+(2, 2, 1);
 
-INSERT INTO Evento_professor (id_evento, id_prof) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+-- --------------------------------------------------------
 
-INSERT INTO Turma_Disciplina (id_turma, id_disciplina) VALUES
+--
+-- Estrutura da tabela `notas_faltas`
+--
+
+CREATE TABLE `notas_faltas` (
+  `id_notas_faltas` int(11) NOT NULL,
+  `id_disciplina` int(11) NOT NULL,
+  `id_aluno` int(11) NOT NULL,
+  `N1` decimal(5,2) DEFAULT NULL,
+  `AI` decimal(5,2) DEFAULT NULL,
+  `AP` decimal(5,2) DEFAULT NULL,
+  `faltas` int(11) DEFAULT NULL,
+  `ano_academico` year(4) NOT NULL,
+  `semestre` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `notas_faltas`
+--
+
+INSERT INTO `notas_faltas` (`id_notas_faltas`, `id_disciplina`, `id_aluno`, `N1`, `AI`, `AP`, `faltas`, `ano_academico`, `semestre`) VALUES
+(1, 1, 1, '7.50', '8.00', '7.00', 2, 2024, 1),
+(2, 2, 2, '6.50', '7.00', '6.00', 1, 2024, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `perfil`
+--
+
+CREATE TABLE `perfil` (
+  `id_perfil` int(11) NOT NULL,
+  `nome_perfil` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `perfil`
+--
+
+INSERT INTO `perfil` (`id_perfil`, `nome_perfil`) VALUES
+(1, 'Admin'),
+(2, 'Professor'),
+(3, 'Aluno'),
+(4, 'ResponsÃƒÆ’Ã‚Â¡vel'),
+(5, 'Secretaria'),
+(6, 'CoordenaÃƒÆ’Ã‚Â§ÃƒÆ’Ã‚Â£o PedagÃƒÆ’Ã‚Â³gica');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `perfil_permissao`
+--
+
+CREATE TABLE `perfil_permissao` (
+  `id_perfil` int(11) NOT NULL,
+  `id_permissao` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `perfil_permissao`
+--
+
+INSERT INTO `perfil_permissao` (`id_perfil`, `id_permissao`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
 (1, 4),
 (1, 5),
+(1, 6),
+(2, 1),
 (2, 2),
 (2, 3),
+(2, 4),
+(3, 1),
 (3, 3),
-(4, 4),
-(5, 5);
+(4, 1),
+(4, 3),
+(5, 6),
+(6, 4);
 
-INSERT INTO Prof_Disciplina (id_prof, id_disciplina) VALUES
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `permissao`
+--
+
+CREATE TABLE `permissao` (
+  `id_permissao` int(11) NOT NULL,
+  `nome_permissao` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `permissao`
+--
+
+INSERT INTO `permissao` (`id_permissao`, `nome_permissao`) VALUES
+(1, 'Visualizar Notas'),
+(2, 'Editar Notas'),
+(3, 'Visualizar Eventos'),
+(4, 'Criar Eventos'),
+(5, 'Editar Perfil'),
+(6, 'Gerenciar UsuÃƒÆ’Ã‚Â¡rios');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `professor`
+--
+
+CREATE TABLE `professor` (
+  `id_professor` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `professor`
+--
+
+INSERT INTO `professor` (`id_professor`, `id_usuario`) VALUES
+(1, 2),
+(2, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `prof_disciplina`
+--
+
+CREATE TABLE `prof_disciplina` (
+  `id_prof_disciplina` int(11) NOT NULL,
+  `id_professor` int(11) NOT NULL,
+  `id_disciplina` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `prof_disciplina`
+--
+
+INSERT INTO `prof_disciplina` (`id_prof_disciplina`, `id_professor`, `id_disciplina`) VALUES
+(1, 1, 1),
+(2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `publicacao`
+--
+
+CREATE TABLE `publicacao` (
+  `id_pub` int(11) NOT NULL,
+  `comentario` varchar(255) DEFAULT NULL,
+  `data_pub` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `publicacao`
+--
+
+INSERT INTO `publicacao` (`id_pub`, `comentario`, `data_pub`) VALUES
+(1, 'Bem-vindos ao novo semestre!', '2024-09-01'),
+(2, 'ReuniÃ£o de pais agendada para o dia 10/10', '2024-09-05'),
+(3, 'aaaaaaaaaaaaaaaaaaaa', '2024-10-09');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `responsavel`
+--
+
+CREATE TABLE `responsavel` (
+  `id_responsavel` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `responsavel`
+--
+
+INSERT INTO `responsavel` (`id_responsavel`, `id_usuario`) VALUES
 (1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+(2, 9);
 
-INSERT INTO Notas_faltas (id_disciplina, id_aluno, N1, AI, AP, faltas, academic_year, data_matricula, semestre) VALUES
- (1, 1, 8.5, 7.5, 9.0, 2, 2022, '2022-01-15', 1),
- (1, 2, 7.0, 6.5, 8.5, 2, 2022, '2022-02-05', 2),
- (1, 3, 7.0, 6.5, 8.5, 2, 2023, '2023-02-05', 1),
- (1, 4, 7.0, 6.5, 8.5, 2, 2023, '2023-02-05', 1),
- (1, 5, 7.0, 6.5, 8.5, 2, 2024, '2024-02-05', 1),
- (2, 1, 6.0, 7.5, 8.0, 1, 2024, '2024-01-15', 1),
- (2, 2, 7.0, 8.0, 6.5, 3, 2024, '2024-01-20', 1),
- (3, 2, 8.0, 9.0, 7.5, 2, 2024, '2024-01-20', 1),
- (3, 3, 9.0, 8.5, 7.0, 1, 2024, '2024-01-25', 1),
- (4, 4, 6.5, 7.0, 8.0, 4, 2024, '2024-01-30', 1),
- (5, 5, 8.0, 9.0, 8.5, 0, 2024, '2024-02-05', 1);
+-- --------------------------------------------------------
 
-INSERT INTO Notas_faltas (id_disciplina, id_aluno, N1, AI, AP, faltas, academic_year, data_matricula, semestre) VALUES
- (1, 1, 11, 1, 12, 2, 2023, '2023-01-15', 2),
- (1, 2, 12, 1, 12, 2, 2023, '2023-02-05', 2),
- (1, 3, 13, 1, 13, 2, 2024, '2024-02-05', 1),
- (1, 5, 15, 1, 15, 0, 2024, '2024-02-05', 2);
+--
+-- Estrutura da tabela `responsavel_aluno`
+--
+
+CREATE TABLE `responsavel_aluno` (
+  `id_responsavel` int(11) NOT NULL,
+  `id_aluno` int(11) NOT NULL,
+  `relacionamento` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `turma`
+--
+
+CREATE TABLE `turma` (
+  `id_turma` int(11) NOT NULL,
+  `nome_turma` varchar(255) NOT NULL,
+  `ano_letivo` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `turma_disciplina`
+--
+
+CREATE TABLE `turma_disciplina` (
+  `id_turma` int(11) NOT NULL,
+  `id_disciplina` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL,
+  `nome_usuario` varchar(255) NOT NULL,
+  `cpf_usuario` varchar(11) NOT NULL,
+  `endereco_usuario` varchar(255) DEFAULT NULL,
+  `telefone_usuario` varchar(255) DEFAULT NULL,
+  `email_usuario` varchar(128) NOT NULL,
+  `nascimento_usuario` date DEFAULT NULL,
+  `senha` varchar(255) NOT NULL,
+  `id_perfil` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nome_usuario`, `cpf_usuario`, `endereco_usuario`, `telefone_usuario`, `email_usuario`, `nascimento_usuario`, `senha`, `id_perfil`) VALUES
+(1, 'JoÃƒÆ’Ã‚Â£o Silva', '12345678901', 'Rua A, 123', '999999999', 'joao@example.com', '2000-01-01', 'senha123', 3),
+(2, 'Maria Oliveira', '23456789012', 'Rua B, 456', '888888888', 'maria@example.com', '1999-02-02', 'senha456', 2),
+(3, 'Pedro Santos', '34567890123', 'Rua C, 789', '777777777', 'pedro@example.com', '2001-03-03', 'senha789', 1),
+(4, 'Lucas', '213432', 'gsfdgsfd', '435234', 'gdfsgs@2134', '2024-09-04', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 2),
+(5, 'Lucas', '213432', 'gsfdgsfd', '435234', 'gdfsgs@2134', '2024-09-04', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 3),
+(6, 'Lucas1', '213432', 'gsfdgsfd34', '43523499', 'aaaaaaaaaas@2134', '2024-09-04', '123', 2),
+(7, 'Lucas12', '2134325', 'Rua tal', '43523499', 'bbbbbb@2134', '2024-09-25', '12345', 3),
+(8, 'Lucas165', '21343255555', 'gsfdgsfd347777', '435234555', 'aaaabbbbbb@2134', '2018-02-27', '12345', 1),
+(9, 'Daniel', '4567894', 'rua taaaaaaaaaaal', '1195959595', 'Daniel@123', '2016-06-14', '123456', 4),
+(10, 'Garbiel', '3424324', '342234132', '31241321', '143241@13', '2024-09-10', '12345', 3);
+
+--
+-- Ãndices para tabelas despejadas
+--
+
+--
+-- Ãndices para tabela `aluno`
+--
+ALTER TABLE `aluno`
+  ADD PRIMARY KEY (`id_aluno`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Ãndices para tabela `aluno_disciplina`
+--
+ALTER TABLE `aluno_disciplina`
+  ADD PRIMARY KEY (`id_aluno_disciplina`),
+  ADD KEY `id_aluno` (`id_aluno`),
+  ADD KEY `id_disciplina` (`id_disciplina`);
+
+--
+-- Ãndices para tabela `disciplina`
+--
+ALTER TABLE `disciplina`
+  ADD PRIMARY KEY (`id_disciplina`);
+
+--
+-- Ãndices para tabela `evento`
+--
+ALTER TABLE `evento`
+  ADD PRIMARY KEY (`id_evento`);
+
+--
+-- Ãndices para tabela `evento_aluno`
+--
+ALTER TABLE `evento_aluno`
+  ADD PRIMARY KEY (`id_evento_aluno`),
+  ADD KEY `id_evento` (`id_evento`),
+  ADD KEY `id_aluno` (`id_aluno`);
+
+--
+-- Ãndices para tabela `evento_professor`
+--
+ALTER TABLE `evento_professor`
+  ADD PRIMARY KEY (`id_evento_professor`),
+  ADD KEY `id_evento` (`id_evento`),
+  ADD KEY `id_professor` (`id_professor`);
+
+--
+-- Ãndices para tabela `notas_faltas`
+--
+ALTER TABLE `notas_faltas`
+  ADD PRIMARY KEY (`id_notas_faltas`),
+  ADD KEY `id_disciplina` (`id_disciplina`),
+  ADD KEY `id_aluno` (`id_aluno`);
+
+--
+-- Ãndices para tabela `perfil`
+--
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`id_perfil`);
+
+--
+-- Ãndices para tabela `perfil_permissao`
+--
+ALTER TABLE `perfil_permissao`
+  ADD PRIMARY KEY (`id_perfil`,`id_permissao`),
+  ADD KEY `id_permissao` (`id_permissao`);
+
+--
+-- Ãndices para tabela `permissao`
+--
+ALTER TABLE `permissao`
+  ADD PRIMARY KEY (`id_permissao`);
+
+--
+-- Ãndices para tabela `professor`
+--
+ALTER TABLE `professor`
+  ADD PRIMARY KEY (`id_professor`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Ãndices para tabela `prof_disciplina`
+--
+ALTER TABLE `prof_disciplina`
+  ADD PRIMARY KEY (`id_prof_disciplina`),
+  ADD KEY `id_professor` (`id_professor`),
+  ADD KEY `id_disciplina` (`id_disciplina`);
+
+--
+-- Ãndices para tabela `publicacao`
+--
+ALTER TABLE `publicacao`
+  ADD PRIMARY KEY (`id_pub`);
+
+--
+-- Ãndices para tabela `responsavel`
+--
+ALTER TABLE `responsavel`
+  ADD PRIMARY KEY (`id_responsavel`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Ãndices para tabela `responsavel_aluno`
+--
+ALTER TABLE `responsavel_aluno`
+  ADD PRIMARY KEY (`id_responsavel`,`id_aluno`);
+
+--
+-- Ãndices para tabela `turma`
+--
+ALTER TABLE `turma`
+  ADD PRIMARY KEY (`id_turma`);
+
+--
+-- Ãndices para tabela `turma_disciplina`
+--
+ALTER TABLE `turma_disciplina`
+  ADD PRIMARY KEY (`id_turma`,`id_disciplina`);
+
+--
+-- Ãndices para tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `id_perfil` (`id_perfil`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `aluno`
+--
+ALTER TABLE `aluno`
+  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `aluno_disciplina`
+--
+ALTER TABLE `aluno_disciplina`
+  MODIFY `id_aluno_disciplina` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `disciplina`
+--
+ALTER TABLE `disciplina`
+  MODIFY `id_disciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `evento`
+--
+ALTER TABLE `evento`
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `evento_aluno`
+--
+ALTER TABLE `evento_aluno`
+  MODIFY `id_evento_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `evento_professor`
+--
+ALTER TABLE `evento_professor`
+  MODIFY `id_evento_professor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `notas_faltas`
+--
+ALTER TABLE `notas_faltas`
+  MODIFY `id_notas_faltas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `perfil`
+--
+ALTER TABLE `perfil`
+  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `permissao`
+--
+ALTER TABLE `permissao`
+  MODIFY `id_permissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `professor`
+--
+ALTER TABLE `professor`
+  MODIFY `id_professor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `prof_disciplina`
+--
+ALTER TABLE `prof_disciplina`
+  MODIFY `id_prof_disciplina` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `publicacao`
+--
+ALTER TABLE `publicacao`
+  MODIFY `id_pub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `responsavel`
+--
+ALTER TABLE `responsavel`
+  MODIFY `id_responsavel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `turma`
+--
+ALTER TABLE `turma`
+  MODIFY `id_turma` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- RestriÃ§Ãµes para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `aluno`
+--
+ALTER TABLE `aluno`
+  ADD CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+
+--
+-- Limitadores para a tabela `aluno_disciplina`
+--
+ALTER TABLE `aluno_disciplina`
+  ADD CONSTRAINT `aluno_disciplina_ibfk_1` FOREIGN KEY (`id_aluno`) REFERENCES `aluno` (`id_aluno`),
+  ADD CONSTRAINT `aluno_disciplina_ibfk_2` FOREIGN KEY (`id_disciplina`) REFERENCES `disciplina` (`id_disciplina`);
+
+--
+-- Limitadores para a tabela `evento_aluno`
+--
+ALTER TABLE `evento_aluno`
+  ADD CONSTRAINT `evento_aluno_ibfk_1` FOREIGN KEY (`id_evento`) REFERENCES `evento` (`id_evento`),
+  ADD CONSTRAINT `evento_aluno_ibfk_2` FOREIGN KEY (`id_aluno`) REFERENCES `aluno` (`id_aluno`);
+
+--
+-- Limitadores para a tabela `evento_professor`
+--
+ALTER TABLE `evento_professor`
+  ADD CONSTRAINT `evento_professor_ibfk_1` FOREIGN KEY (`id_evento`) REFERENCES `evento` (`id_evento`),
+  ADD CONSTRAINT `evento_professor_ibfk_2` FOREIGN KEY (`id_professor`) REFERENCES `professor` (`id_professor`);
+
+--
+-- Limitadores para a tabela `notas_faltas`
+--
+ALTER TABLE `notas_faltas`
+  ADD CONSTRAINT `notas_faltas_ibfk_1` FOREIGN KEY (`id_disciplina`) REFERENCES `disciplina` (`id_disciplina`),
+  ADD CONSTRAINT `notas_faltas_ibfk_2` FOREIGN KEY (`id_aluno`) REFERENCES `aluno` (`id_aluno`);
+
+--
+-- Limitadores para a tabela `professor`
+--
+ALTER TABLE `professor`
+  ADD CONSTRAINT `professor_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+
+--
+-- Limitadores para a tabela `prof_disciplina`
+--
+ALTER TABLE `prof_disciplina`
+  ADD CONSTRAINT `prof_disciplina_ibfk_1` FOREIGN KEY (`id_professor`) REFERENCES `professor` (`id_professor`),
+  ADD CONSTRAINT `prof_disciplina_ibfk_2` FOREIGN KEY (`id_disciplina`) REFERENCES `disciplina` (`id_disciplina`);
+
+--
+-- Limitadores para a tabela `responsavel`
+--
+ALTER TABLE `responsavel`
+  ADD CONSTRAINT `responsavel_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+
+--
+-- Limitadores para a tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_perfil`) REFERENCES `perfil` (`id_perfil`);
+COMMIT;
