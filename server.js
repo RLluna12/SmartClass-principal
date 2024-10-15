@@ -51,6 +51,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
 
+app.get('/usuarios', (req, res) => {
+  connection.query('SELECT * FROM usuario', (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar usuários no MySQL:', err);
+      res.status(500).json({ message: 'Erro ao buscar usuários' });
+    } else {
+      res.status(200).json(results);
+    }
+  });
+});
+
+
 // Rota para cadastro de usuários
 app.post('/usuarios', (req, res) => {
   const {
@@ -129,9 +141,59 @@ app.post('/usuarios', (req, res) => {
   );
 });
 
+app.put('/usuarios/:id', (req, res) => {
+  const id_usuario = req.params.id;
+  const {
+    nome_usuario,
+    cpf_usuario,
+    endereco_usuario,
+    telefone_usuario,
+    email_usuario,
+    nascimento_usuario,
+    senha,
+    id_perfil
+  } = req.body;
+
+  connection.query(
+    'UPDATE usuario SET nome_usuario = ?, cpf_usuario = ?, endereco_usuario = ?, telefone_usuario = ?, email_usuario = ?, nascimento_usuario = ?, senha = ?, id_perfil = ? WHERE id_usuario = ?',
+    [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, nascimento_usuario, senha, id_perfil, id_usuario],
+    (err) => {
+      if (err) {
+        console.error('Erro ao atualizar usuário no MySQL:', err);
+        res.status(500).json({ message: 'Erro ao atualizar o usuário' });
+      } else {
+        res.status(200).json({ message: 'Usuário atualizado com sucesso!' });
+      }
+    }
+  );
+});
+
+
+app.delete('/usuarios/:id', (req, res) => {
+  const id_usuario = req.params.id;
+
+  // Deletar de outras tabelas que referenciam o usuário
+  connection.query('DELETE FROM professor WHERE id_usuario = ?', [id_usuario], (err) => {
+    if (err) {
+      console.error('Erro ao deletar professor no MySQL:', err);
+      res.status(500).json({ message: 'Erro ao deletar o professor' });
+    } else {
+      // Depois de deletar o professor, deletar o usuário
+      connection.query('DELETE FROM usuario WHERE id_usuario = ?', [id_usuario], (err) => {
+        if (err) {
+          console.error('Erro ao deletar usuário no MySQL:', err);
+          res.status(500).json({ message: 'Erro ao deletar o usuário' });
+        } else {
+          res.status(200).json({ message: 'Usuário deletado com sucesso!' });
+        }
+      });
+    }
+  });
+});
 
 
 
+//     Mural
 connection.query('SELECT * FROM publicacao;', (err, results) => {
   if (err) {
     console.error('Ocorreu um erro na tabela publicacao: ' + err);

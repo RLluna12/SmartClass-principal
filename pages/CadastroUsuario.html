@@ -183,6 +183,27 @@
     </div>
 </div>
 
+
+<div class="container mt-5">
+  <h2>Usuários Cadastrados</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="usuariosTableBody">
+      <!-- Linhas serão inseridas aqui via JavaScript -->
+    </tbody>
+  </table>
+</div>
+
+
 <script>
     // Mostrar ou ocultar campos específicos com base no perfil selecionado
     document.getElementById('id_perfil').addEventListener('change', function () {
