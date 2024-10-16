@@ -182,11 +182,38 @@
         </div>
     </div>
 </div>
+<!-- Formulário de Edição -->
+<div class="col-md-6">
+
+<form id="updateUsuarioForm">
+   <h2>Editar Usuário</h2>
+   <div class="form-group">
+      <input type="text" class="form-control" id="editUsuarioId" placeholder="ID do Usuário" required disabled>
+   </div>
+   <div class="form-group">
+    <input type="text" class="form-control" id="editUsuarioNome" placeholder="Nome" required>
+    </div>
+   <div class="form-group">
+     <input type="text" class="form-control" id="editUsuarioCPF" placeholder="CPF" required>
+    </div>
+   <div class="form-group">
+      <input type="email" class="form-control" id="editUsuarioEmail" placeholder="Email" required>
+    </div>
+   <div class="form-group">
+      <input type="text" class="form-control" id="editUsuarioTelefone" placeholder="Telefone" required>
+    </div>
+   <div class="form-group">
+     <input type="text" class="form-control" id="editUsuarioEndereco" placeholder="Endereço" required>
+   </div>
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+    <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
+  </form>
+</div>
 
 
-<div class="container mt-5">
-  <h2>Usuários Cadastrados</h2>
-  <table class="table table-bordered">
+<h1 class="mt-5">Usuários</h1>
+    <div class="containerTable" style="overflow-y: auto; max-height: 400px;">
+  <table class="table">
     <thead>
       <tr>
         <th>ID</th>
@@ -194,14 +221,17 @@
         <th>CPF</th>
         <th>Email</th>
         <th>Telefone</th>
+        <th>Endereço</th>
         <th>Ações</th>
       </tr>
     </thead>
-    <tbody id="usuariosTableBody">
+    <tbody id="usuariosTableBody" class="overflow-auto">
       <!-- Linhas serão inseridas aqui via JavaScript -->
     </tbody>
   </table>
 </div>
+
+
 
 
 <script>
