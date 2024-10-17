@@ -51,6 +51,7 @@ document.getElementById('cadastroUsuarioForm').addEventListener('submit', functi
             <td>${usuario.email_usuario}</td>
             <td>${usuario.telefone_usuario}</td>
             <td>${usuario.endereco_usuario}</td>
+              <td>${usuario.id_perfil}</td>
             <td>
               <button class="btn btn-warning btn-sm" onclick="editarUsuario(${usuario.id_usuario})">Editar</button>
               <button class="btn btn-danger btn-sm" onclick="deletarUsuario(${usuario.id_usuario})">Deletar</button>
@@ -91,7 +92,8 @@ function editarUsuario(id_usuario) {
       document.getElementById('editUsuarioEmail').value = usuario.email_usuario;
       document.getElementById('editUsuarioTelefone').value = usuario.telefone_usuario;
       document.getElementById('editUsuarioEndereco').value = usuario.endereco_usuario;
-
+      document.getElementById('editUsuarioID_Perfil').value = usuario.id_perfil;
+      
       // Atualiza o comportamento do botão de enviar para atualizar o usuário
       document.getElementById('updateUsuarioForm').onsubmit = function (event) {
         event.preventDefault();
@@ -101,7 +103,8 @@ function editarUsuario(id_usuario) {
           cpf_usuario: document.getElementById('editUsuarioCPF').value,
           email_usuario: document.getElementById('editUsuarioEmail').value,
           telefone_usuario: document.getElementById('editUsuarioTelefone').value,
-          endereco_usuario: document.getElementById('editUsuarioEndereco').value
+          endereco_usuario: document.getElementById('editUsuarioEndereco').value,
+          id_perfil: document.getElementById('editUsuarioID_Perfil').value
         };
 
         fetch(`http://localhost:3000/usuarios/${id_usuario}`, {

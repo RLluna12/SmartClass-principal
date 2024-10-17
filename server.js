@@ -160,11 +160,11 @@ app.post('/usuarios', (req, res) => {
 
 app.put('/usuarios/:id', (req, res) => {
   const id_usuario = req.params.id;
-  const { nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario } = req.body;
+  const { nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, id_perfil } = req.body;
 
   connection.query(
-    'UPDATE usuario SET nome_usuario = ?, cpf_usuario = ?, endereco_usuario = ?, telefone_usuario = ?, email_usuario = ? WHERE id_usuario = ?',
-    [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, id_usuario],
+    'UPDATE usuario SET nome_usuario = ?, cpf_usuario = ?, endereco_usuario = ?, telefone_usuario = ?, email_usuario = ?, id_perfil = ? WHERE id_usuario = ?',
+    [nome_usuario, cpf_usuario, endereco_usuario, telefone_usuario, email_usuario, id_perfil, id_usuario],
     (err) => {
       if (err) {
         console.error('Erro ao atualizar usuário no MySQL:', err);

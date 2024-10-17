@@ -156,12 +156,12 @@
                             <label for="id_perfil" class="form-label">Perfil</label>
                             <select class="form-select" id="id_perfil" name="id_perfil" required>
                                 <option value="">Selecione o Perfil</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Professor</option>
-                                <option value="3">Aluno</option>
-                                <option value="4">Responsável</option>
-                                <option value="5">Secretaria</option>
-                                <option value="6">Coordenação Pedagógica</option>
+                                <option value="1">1-Admin</option>
+                                <option value="2">2-Professor</option>
+                                <option value="3">3-Aluno</option>
+                                <option value="4">4-Responsável</option>
+                                <option value="5">5-Secretaria</option>
+                                <option value="6">6-Coordenação Pedagógica</option>
                             </select>
                         </div>
                         <!-- Número de Registro (RA) para Aluno -->
@@ -205,6 +205,9 @@
    <div class="form-group">
      <input type="text" class="form-control" id="editUsuarioEndereco" placeholder="Endereço" required>
    </div>
+   <div class="form-group">
+    <input type="text" class="form-control" id="editUsuarioID_Perfil" placeholder="ID_Perfil" required>
+  </div>
     <button type="submit" class="btn btn-primary">Atualizar</button>
     <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancelar</button>
   </form>
@@ -222,6 +225,7 @@
         <th>Email</th>
         <th>Telefone</th>
         <th>Endereço</th>
+        <th>ID_Perfil</th>
         <th>Ações</th>
       </tr>
     </thead>
