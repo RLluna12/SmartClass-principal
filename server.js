@@ -51,6 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
 
+// Obter todos os usuários
 app.get('/usuarios', (req, res) => {
   connection.query('SELECT * FROM usuario', (err, results) => {
     if (err) {
@@ -58,6 +59,22 @@ app.get('/usuarios', (req, res) => {
       res.status(500).json({ message: 'Erro ao buscar usuários' });
     } else {
       res.status(200).json(results);
+    }
+  });
+});
+
+// Obter um usuário específico por ID
+app.get('/usuarios/:id_usuario', (req, res) => {
+  const usuarioID = parseInt(req.params.id_usuario); // Captura o ID do usuário a partir dos parâmetros da rota
+
+  connection.query('SELECT * FROM usuario WHERE id_usuario = ?', [usuarioID], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar o usuário no MySQL:', err);
+      res.status(500).json({ message: 'Erro ao buscar o usuário' });
+    } else if (results.length === 0) {
+      res.status(404).json({ message: 'Usuário não encontrado' }); // Caso não encontre o usuário
+    } else {
+      res.status(200).json(results[0]); // Retorna o primeiro resultado (usuário encontrado)
     }
   });
 });
